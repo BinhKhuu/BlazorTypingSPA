@@ -10,12 +10,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 
-namespace TypingSPA.Tests.Web
+namespace TypingSPA.Tests.Web.Components
 {
     public class HomePage
     {
 
-        
+
 
         [Fact]
         public void ShouldLoadPage()
@@ -23,7 +23,7 @@ namespace TypingSPA.Tests.Web
             using var ctx = new TestContext();
             var comp = ctx.RenderComponent<TypingSPA.Web.Pages.Index>();
             var headingElement = comp.Find($"#{WebConstants.ComponentIDs.LandingPage}");
-            
+
             var typingMessage = headingElement.TextContent;
             Assert.Equal(typingMessage, WebConstants.LandingPageWelcome);
 

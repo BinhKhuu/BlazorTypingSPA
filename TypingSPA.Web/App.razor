@@ -1,4 +1,4 @@
-﻿<MudThemeProvider />
+﻿<MudThemeProvider IsDarkMode="IsDarkMode" Theme="@ThemeService.Theme" />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
@@ -14,3 +14,35 @@
         </LayoutView>
     </NotFound>
 </Router>
+
+@code{
+    //[Inject]
+    //MudThemeProvider _mudThemeProvider { get; set; }
+    [Inject]
+    ThemeService ThemeService { get; set; }
+    bool IsDarkMode { get; set; } = true;
+
+    protected override void OnInitialized()
+    {
+        ThemeService.IsDarkModeObservable.UpdateDarkMode(IsDarkMode);
+        // using Observable because theme manager can't trigger StateHasChanged in App component
+        Action<bool> OnDarkModeChange = (isDarkMode) =>
+        {
+            IsDarkMode = isDarkMode;
+            this.StateHasChanged();
+        };
+        ThemeService.AddDarkModeSubscription(OnDarkModeChange);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            IsDarkMode = true;
+            //IsDarkMode = await _mudThemeProvider.GetSystemPreference();
+            //StateHasChanged();
+        }
+    }
+
+    // TODO get system preference for dark mode https://mudblazor.com/customization/overview#system-preference
+}

@@ -1,5 +1,9 @@
 ﻿<MudAppBar id="@WebConstants.ComponentIDs.GlobalNav" Color="Color.Dark" Fixed="false">
-    <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" />
+    <MudMenu Icon="@Icons.Material.Filled.Menu" Label="Open Menu" Color="Color.Inherit">
+        <MudMenuItem OnClick="ToggleDarkMode">Toggle dark mode</MudMenuItem>
+        <MudMenuItem>option 1</MudMenuItem>
+        <MudMenuItem>option 2</MudMenuItem>
+    </MudMenu>
     <MudSpacer />
     <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" />
 </MudAppBar>

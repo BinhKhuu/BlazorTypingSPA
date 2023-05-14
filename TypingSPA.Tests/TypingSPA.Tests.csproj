@@ -10,6 +10,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Web\NewFolder1\**" />
+    <Compile Remove="Web\NewFolder\**" />
+    <EmbeddedResource Remove="Web\NewFolder1\**" />
+    <EmbeddedResource Remove="Web\NewFolder\**" />
+    <None Remove="Web\NewFolder1\**" />
+    <None Remove="Web\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="bunit" Version="1.19.14" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
     <PackageReference Include="Moq" Version="4.18.4" />

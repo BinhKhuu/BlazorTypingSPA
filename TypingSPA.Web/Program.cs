@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
 using TypingSPA.Web;
+using TypingSPA.Web.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -11,5 +12,9 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 
 // Mud Blazor Setup
 builder.Services.AddMudServices();
+
+// Web Services
+builder.Services.AddScoped<ThemeService>();
+
 
 await builder.Build().RunAsync();
