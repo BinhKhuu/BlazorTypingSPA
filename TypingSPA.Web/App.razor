@@ -1,4 +1,4 @@
-﻿<MudThemeProvider IsDarkMode="IsDarkMode" Theme="@ThemeService.Theme" />
+﻿<MudThemeProvider IsDarkMode="Settings.IsDarkMode" Theme="@ThemeService.Theme" DefaultScrollbar="Settings.DefaultScrollBar" />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
@@ -16,14 +16,25 @@
 </Router>
 
 @code{
-    //[Inject]
-    //MudThemeProvider _mudThemeProvider { get; set; }
     [Inject]
     ThemeService ThemeService { get; set; }
     bool IsDarkMode { get; set; } = true;
 
+    ThemeSettings Settings { get; set; }
+
     protected override void OnInitialized()
     {
+
+        Settings = new ThemeSettings();
+
+        Action<ThemeSettings> OnThemeSettingsUpdate = (settings) =>
+        {
+            Settings = settings;
+            this.StateHasChanged();
+        };
+
+        ThemeService.AddThemeSubscription(OnThemeSettingsUpdate);
+
         ThemeService.IsDarkModeObservable.UpdateDarkMode(IsDarkMode);
         // using Observable because theme manager can't trigger StateHasChanged in App component
         Action<bool> OnDarkModeChange = (isDarkMode) =>
@@ -39,8 +50,6 @@
         if (firstRender)
         {
             IsDarkMode = true;
-            //IsDarkMode = await _mudThemeProvider.GetSystemPreference();
-            //StateHasChanged();
         }
     }
 

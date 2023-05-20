@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Common.Web.Models;
+using Microsoft.AspNetCore.Components;
 using TypingSPA.Web.Services;
 
 namespace TypingSPA.Web.Shared
@@ -10,7 +11,9 @@ namespace TypingSPA.Web.Shared
 
         public void ToggleDarkMode()
         {
-            ThemeService.IsDarkModeObservable.UpdateDarkMode(!ThemeService.IsDarkModeObservable.IsDarkMode);
+            ThemeSettings settings = ThemeService.SettingsObservable.Settings;
+            settings.IsDarkMode = !settings.IsDarkMode;
+            ThemeService.SettingsObservable.UpdateThemeSettings(settings);
         }
     }
 }
