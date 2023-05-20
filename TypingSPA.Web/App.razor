@@ -1,4 +1,4 @@
-﻿<MudThemeProvider IsDarkMode="Settings.IsDarkMode" Theme="@ThemeService.Theme" DefaultScrollbar="Settings.DefaultScrollBar" />
+﻿<MudThemeProvider @ref="@MudThemeProviderRef" IsDarkMode="Settings.IsDarkMode" Theme="@ThemeService.Theme" DefaultScrollbar="Settings.DefaultScrollBar" />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
@@ -18,8 +18,7 @@
 @code{
     [Inject]
     ThemeService ThemeService { get; set; }
-    bool IsDarkMode { get; set; } = true;
-
+    MudThemeProvider MudThemeProviderRef { get; set; }
     ThemeSettings Settings { get; set; }
 
     protected override void OnInitialized()
@@ -36,11 +35,12 @@
         ThemeService.AddThemeSubscription(OnThemeSettingsUpdate);
     }
 
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            IsDarkMode = true;
+            Settings.IsDarkMode = await MudThemeProviderRef.GetSystemPreference();
         }
     }
 

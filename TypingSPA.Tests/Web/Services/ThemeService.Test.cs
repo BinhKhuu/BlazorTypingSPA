@@ -1,4 +1,5 @@
 ﻿using Bunit;
+using Common.Web.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using MudBlazor;
@@ -23,10 +24,11 @@ namespace TypingSPA.Tests.Web.Services
         public void ShouldSetDarkModeToTrue()
         {
             bool darkMode = false;
-            Action<bool> action = (test) => { darkMode = true; };
-            _themeService.AddDarkModeSubscription(action);
-            _themeService.IsDarkModeObservable.UpdateDarkMode(true);
-            Assert.True(darkMode);
+            var themeSettings = new ThemeSettings();
+            Action<ThemeSettings> action = (setting) => { themeSettings.IsDarkMode = true; };
+            _themeService.AddThemeSubscription(action);
+            _themeService.SettingsObservable.UpdateThemeSettings(themeSettings);
+            Assert.True(themeSettings.IsDarkMode);
         }
     }
 }
