@@ -34,15 +34,6 @@
         };
 
         ThemeService.AddThemeSubscription(OnThemeSettingsUpdate);
-
-        ThemeService.IsDarkModeObservable.UpdateDarkMode(IsDarkMode);
-        // using Observable because theme manager can't trigger StateHasChanged in App component
-        Action<bool> OnDarkModeChange = (isDarkMode) =>
-        {
-            IsDarkMode = isDarkMode;
-            this.StateHasChanged();
-        };
-        ThemeService.AddDarkModeSubscription(OnDarkModeChange);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
