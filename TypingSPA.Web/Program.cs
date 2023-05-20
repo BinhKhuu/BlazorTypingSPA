@@ -15,6 +15,6 @@ builder.Services.AddMudServices();
 
 // Web Services
 builder.Services.AddScoped<ThemeService>();
-
+builder.Services.AddScoped<LocalStorageService>();
 
 await builder.Build().RunAsync();

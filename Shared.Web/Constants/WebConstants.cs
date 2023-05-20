@@ -16,5 +16,10 @@ namespace Common.Web.Constants
             public static readonly string GlobalNav = "GlobalNav";
             public static readonly string LandingPage = "LandingPage";
         }
+
+        public static class LocalStorageSettingConstants
+        {
+            public static readonly string ThemeSettingName = "TypingSPAThemeSettings";
+        }
     }
 }

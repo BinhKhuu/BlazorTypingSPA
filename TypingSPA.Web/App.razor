@@ -21,14 +21,16 @@
     MudThemeProvider MudThemeProviderRef { get; set; }
     ThemeSettings Settings { get; set; }
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-
+        // prevent MudThemeProvider from erroring since Settings is used as bind property
         Settings = new ThemeSettings();
-
+        await ThemeService.LoadSettingsFromLocalStorage();
+        Settings = ThemeService.SettingsObservable.Settings;
         Action<ThemeSettings> OnThemeSettingsUpdate = (settings) =>
         {
             Settings = settings;
+            ThemeService.SaveLocalStorageThemeSettings();
             this.StateHasChanged();
         };
 
@@ -40,9 +42,9 @@
     {
         if (firstRender)
         {
-            Settings.IsDarkMode = await MudThemeProviderRef.GetSystemPreference();
+            // load preferences not needed when OnIntializedAsync also loads theme settings
+            await ThemeService.LoadSettingsFromLocalStorage();
+            Settings = ThemeService.SettingsObservable.Settings;
         }
     }
-
-    // TODO get system preference for dark mode https://mudblazor.com/customization/overview#system-preference
 }
