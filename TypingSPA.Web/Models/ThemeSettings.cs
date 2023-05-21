@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Common.Web.Models
+namespace TypingSPA.Web.Models
 {
     public class ThemeSettings
     {

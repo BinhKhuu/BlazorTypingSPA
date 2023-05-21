@@ -1,5 +1,5 @@
 ﻿using Bunit;
-using Common.Web.Models;
+using TypingSPA.Web.Models;
 using Microsoft.JSInterop;
 using Newtonsoft.Json;
 using System;
@@ -10,7 +10,7 @@ using System.Text;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using TypingSPA.Web.Services;
-using static Common.Web.Constants.WebConstants;
+using static TypingSPA.Web.Constants.WebConstants;
 
 namespace TypingSPA.Tests.Web.Services
 {

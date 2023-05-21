@@ -1,5 +1,5 @@
 ﻿using Bunit;
-using Common.Web.Constants;
+using TypingSPA.Web.Constants;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using MudBlazor;

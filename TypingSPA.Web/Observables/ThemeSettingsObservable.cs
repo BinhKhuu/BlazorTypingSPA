@@ -1,4 +1,4 @@
-﻿using Common.Web.Models;
+﻿using TypingSPA.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Common.Web.Observables
+namespace TypingSPA.Web.Observables
 {
     public class ThemeSettingsObservable : IObservable<ThemeSettings>
     {

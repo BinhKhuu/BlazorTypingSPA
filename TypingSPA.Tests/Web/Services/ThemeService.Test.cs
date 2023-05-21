@@ -1,5 +1,5 @@
 ﻿using Bunit;
-using Common.Web.Models;
+using TypingSPA.Web.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.JSInterop;
 using Moq;

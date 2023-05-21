@@ -1,12 +1,12 @@
-﻿using Common.Web.Models;
-using Common.Web.Observables;
+﻿using TypingSPA.Web.Models;
+using TypingSPA.Web.Observables;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using MudBlazor;
 using System;
 using System.Text.Json;
-using static Common.Web.Constants.WebConstants;
-using static Common.Web.Observables.ThemeSettingsObservable;
+using static TypingSPA.Web.Constants.WebConstants;
+using static TypingSPA.Web.Observables.ThemeSettingsObservable;
 
 namespace TypingSPA.Web.Services
 {

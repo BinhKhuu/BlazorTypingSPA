@@ -1,4 +1,4 @@
-﻿using Common.Web.Models;
+﻿using TypingSPA.Web.Models;
 using Microsoft.AspNetCore.Components;
 using TypingSPA.Web.Services;
 
