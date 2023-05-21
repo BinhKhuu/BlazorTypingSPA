@@ -32,6 +32,8 @@ namespace TypingSPA.Web.Services
             }
         }
 
+        // because results can be null jsonserializer will throw error when trying to Deserialize null
+        // better approach would be to return the JSON string or set it as an output variable
         public async Task<T> GetValueAsync<T>(string key)
         {
             await WaitForReference();

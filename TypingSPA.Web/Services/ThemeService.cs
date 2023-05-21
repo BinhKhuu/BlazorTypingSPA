@@ -24,15 +24,24 @@ namespace TypingSPA.Web.Services
 
         public async Task LoadSettingsFromLocalStorage()
         {
-            var themeSettings = await LocalStorage.GetValueAsync<ThemeSettings>(LocalStorageSettingConstants.ThemeSettingName);
-            if (themeSettings == null)
+            try
+            {
+                var themeSettings = await LocalStorage.GetValueAsync<ThemeSettings>(LocalStorageSettingConstants.ThemeSettingName);
+                if (themeSettings == null)
+                {
+                    SaveLocalStorageThemeSettings();
+                }
+                else
+                {
+                    SettingsObservable.Settings = themeSettings;
+                }
+
+            }
+            catch (Exception ex)
             {
                 SaveLocalStorageThemeSettings();
             }
-            else
-            {
-                SettingsObservable.Settings = themeSettings;
-            }
+
         }
 
         public async Task SaveLocalStorageThemeSettings()
