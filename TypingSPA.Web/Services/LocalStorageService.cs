@@ -1,5 +1,6 @@
 ﻿using Common.Web.Models;
 using Microsoft.JSInterop;
+using System;
 using System.Text.Json;
 
 namespace TypingSPA.Web.Services
@@ -13,6 +14,15 @@ namespace TypingSPA.Web.Services
         {
             JSRunTime = jsRuntime;
         }
+
+        // for testing
+        // because JSAccessor imports the module on when needed when testing our mocks will not get invoked.
+        // to test call call the Invoke directly from the mock.
+        //public LocalStorageService(IJSRuntime jsRuntime, IJSObjectReference jsAccessor)
+        //{
+        //    JSRunTime = jsRuntime;
+        //    JSAccessor = new Lazy<IJSObjectReference>(jsAccessor);
+        //}
 
         private async Task WaitForReference()
         {

@@ -1,6 +1,7 @@
 ﻿using Bunit;
 using Common.Web.Models;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.JSInterop;
 using Moq;
 using MudBlazor;
 using System;
@@ -17,7 +18,9 @@ namespace TypingSPA.Tests.Web.Services
         private ThemeService _themeService { get; set; }
 
         public ThemeServiceTests() {
-            _themeService = new ThemeService();
+            var mockJSRuntime = new Mock<IJSRuntime>();
+            var mockLocalStorageSerivce = new Mock<TypingSPA.Web.Services.LocalStorageService>(mockJSRuntime.Object);
+            _themeService = new ThemeService(mockLocalStorageSerivce.Object);
         }
 
         [Fact]
