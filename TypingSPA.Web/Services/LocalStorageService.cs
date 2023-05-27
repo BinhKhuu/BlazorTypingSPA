@@ -34,12 +34,18 @@ namespace TypingSPA.Web.Services
 
         // because results can be null jsonserializer will throw error when trying to Deserialize null
         // better approach would be to return the JSON string or set it as an output variable
-        public async Task<T> GetValueAsync<T>(string key)
+        public async Task<T?> GetValueAsync<T>(string key)
         {
-            await WaitForReference();
-            var result = await JSAccessor.Value.InvokeAsync<string>("get", key);
-            return JsonSerializer.Deserialize<T>(result);
-            //return result;
+            try
+            {
+                await WaitForReference();
+                var result = await JSAccessor.Value.InvokeAsync<string>("get", key);
+                return JsonSerializer.Deserialize<T>(result);
+            }
+            catch (Exception ex)
+            {
+                return default;
+            }
         }
         // issue with converting typed object, when storing just serialize the value was JSON
         public async Task SetValueAsync<T>(string key, T value)

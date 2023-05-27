@@ -13,12 +13,10 @@ namespace TypingSPA.Web.Services
     public class ThemeService
     {
         public ThemeSettingsObservable SettingsObservable { get; set; } 
-        public MudTheme Theme { get; set; }
         private LocalStorageService LocalStorage { get; set; }
 
         public ThemeService(LocalStorageService localStorage) { 
             LocalStorage = localStorage;
-            Theme = new MudTheme();
             SettingsObservable = new ThemeSettingsObservable();
         }
 
@@ -29,7 +27,7 @@ namespace TypingSPA.Web.Services
                 var themeSettings = await LocalStorage.GetValueAsync<ThemeSettings>(LocalStorageSettingConstants.ThemeSettingName);
                 if (themeSettings == null)
                 {
-                    SaveLocalStorageThemeSettings();
+                    SaveLocalStorageDefaultThemeSettings(); //save default values
                 }
                 else
                 {
@@ -39,7 +37,7 @@ namespace TypingSPA.Web.Services
             }
             catch (Exception ex)
             {
-                SaveLocalStorageThemeSettings();
+                SaveLocalStorageDefaultThemeSettings(); //save default values
             }
 
         }
@@ -58,6 +56,30 @@ namespace TypingSPA.Web.Services
         {
             var themeSettingsSubject = new ThemeSettingSubject(OnThemeSettingsChange);
             return SettingsObservable.Subscribe(themeSettingsSubject);
+        }
+
+        public async Task SaveLocalStorageDefaultThemeSettings()
+        {
+            var defaultTheme = new ThemeSettings()
+            {
+                IsDarkMode = false,
+                DefaultScrollBar = false,
+                LightTheme = new ThemePalette()
+                {
+                    Primary = Colors.Blue.Default,
+                    Secondary = Colors.Green.Accent4,
+                    AppbarBackground = Colors.Red.Default,
+                },
+                DarkTheme = new ThemePalette()
+                {
+                    Primary = Colors.Blue.Default,
+                    Secondary = Colors.Green.Accent4,
+                    AppbarBackground = Colors.Red.Default,
+                }
+            };
+            SettingsObservable.Settings = defaultTheme;
+            await LocalStorage.SetValueAsync(LocalStorageSettingConstants.ThemeSettingName, defaultTheme);
+            
         }
 
     }

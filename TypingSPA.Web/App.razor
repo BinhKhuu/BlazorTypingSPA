@@ -1,7 +1,7 @@
-﻿<MudThemeProvider @ref="@MudThemeProviderRef" IsDarkMode="Settings.IsDarkMode" DefaultScrollbar="Settings.DefaultScrollBar" />
+﻿<MudThemeProvider @ref="@MudThemeProviderRef" IsDarkMode="Settings.IsDarkMode" Theme="Theme" DefaultScrollbar="Settings.DefaultScrollBar" />
 <MudDialogProvider />
 <MudSnackbarProvider />
-
+<MudButton Color="Color.Primary">test</MudButton>"
 <Router AppAssembly="@typeof(App).Assembly">
     <Found Context="routeData">
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
@@ -20,6 +20,7 @@
     ThemeService ThemeService { get; set; }
     MudThemeProvider MudThemeProviderRef { get; set; }
     ThemeSettings Settings { get; set; }
+    MudTheme Theme { get; set; } = new MudTheme();
 
     protected override async Task OnInitializedAsync()
     {
@@ -27,9 +28,11 @@
         Settings = new ThemeSettings();
         await ThemeService.LoadSettingsFromLocalStorage();
         Settings = ThemeService.SettingsObservable.Settings;
+        SetColourTheme();
         Action<ThemeSettings> OnThemeSettingsUpdate = (settings) =>
         {
             Settings = settings;
+            SetColourTheme();
             ThemeService.SaveLocalStorageThemeSettings();
             this.StateHasChanged();
         };
@@ -38,13 +41,32 @@
     }
 
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    //protected override async Task OnAfterRenderAsync(bool firstRender)
+    //{
+    //    if (firstRender)
+    //    {
+    //        // load preferences not needed when OnIntializedAsync also loads theme settings
+    //        await ThemeService.LoadSettingsFromLocalStorage();
+    //        Settings = ThemeService.SettingsObservable.Settings;
+    //    }
+    //}
+
+    public void SetColourTheme()
     {
-        if (firstRender)
-        {
-            // load preferences not needed when OnIntializedAsync also loads theme settings
-            await ThemeService.LoadSettingsFromLocalStorage();
-            Settings = ThemeService.SettingsObservable.Settings;
-        }
+        Theme = new MudTheme()
+            {
+                Palette = new PaletteLight()
+                {
+                    Primary = Settings.LightTheme.Primary,
+                    Secondary = Settings.LightTheme.Secondary,
+                    AppbarBackground = Settings.LightTheme.AppbarBackground,
+                },
+                PaletteDark = new PaletteDark()
+                {
+                    Primary = Settings.DarkTheme.Primary,
+                    Secondary = Settings.DarkTheme.Secondary,
+                    AppbarBackground = Settings.DarkTheme.AppbarBackground
+                }
+            };
     }
 }
