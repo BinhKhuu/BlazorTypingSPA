@@ -9,34 +9,48 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using TypingSPA.Web.Services;
+using MudBlazor.Services;
+using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 
 namespace TypingSPA.Tests.Web.Components
 {
-    public class HomePage
+    public class HomePageTests
     {
+        public TestContext ctx { get; set; }
+        public BunitJSInterop jsInterop { get; set; }
 
-
+        public HomePageTests() {
+            ctx = new TestContext();
+            ctx.Services.AddMudServices();
+            jsInterop = ctx.JSInterop.SetupModule("/JSModules/LocalStorageAccessor.js");
+            ctx.JSInterop.SetupVoid("mudPopover.connect", _ => true);
+            var mockLocalStorageService = new Mock<LocalStorageService>(jsInterop.JSRuntime);
+            var mockThemeService = new Mock<ThemeService>(mockLocalStorageService.Object);
+            ctx.Services.AddSingleton(mockLocalStorageService.Object);
+            ctx.Services.AddSingleton(mockThemeService.Object);
+        }
 
         [Fact]
         public void ShouldLoadPage()
         {
-            using var ctx = new TestContext();
             var comp = ctx.RenderComponent<TypingSPA.Web.Pages.Index>();
             var headingElement = comp.Find($"#{WebConstants.ComponentIDs.LandingPage}");
-
             var typingMessage = headingElement.TextContent;
             Assert.Equal(typingMessage, WebConstants.LandingPageWelcome);
 
         }
 
         [Fact]
-        public void ShouldLoadGlobalNav()
+        public void ShouldLoadMainLayout()
         {
-            using var ctx = new TestContext();
+            
             var comp = ctx.RenderComponent<TypingSPA.Web.Shared.MainLayout>();
             var headingElement = comp.Find($"#{WebConstants.ComponentIDs.GlobalNav}");
-
-            var exists = headingElement != null;
+            var mainElement = comp.Find($"#{WebConstants.ComponentIDs.MainComponent}");
+            var footerElement = comp.Find($"#{WebConstants.ComponentIDs.GlobalFooter}");
+            var exists = headingElement != null && mainElement != null && footerElement != null;
             Assert.True(exists);
         }
 
@@ -53,6 +67,5 @@ namespace TypingSPA.Tests.Web.Components
             ctx.Services.AddSingleton(mockSnackBarService.Object);
             ctx.Services.AddSingleton(mockMudPopoverProviderService.Object);
         }
-
     }
 }

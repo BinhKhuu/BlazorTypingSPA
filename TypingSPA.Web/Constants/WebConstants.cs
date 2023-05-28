@@ -15,6 +15,8 @@ namespace TypingSPA.Web.Constants
         {
             public static readonly string GlobalNav = "GlobalNav";
             public static readonly string LandingPage = "LandingPage";
+            public static readonly string GlobalFooter = "GlobalFooter";
+            public static readonly string MainComponent = "MainComponent";
         }
 
         public static class LocalStorageSettingConstants
