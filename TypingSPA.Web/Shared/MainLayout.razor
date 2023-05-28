@@ -1,16 +1,44 @@
 ﻿@inherits LayoutComponentBase
 
 
-<div class="page">
+<div class="page" style="background: @BackgroundColour">
     <main>
         <NavMenu />
-
-        <article class="content px-4">
-            @Body
-        </article>
+        <MudContainer MaxWidth="MaxWidth.Large" Fixed="true" Style="height: 100vh">
+            <article class="content px-4">
+                @Body
+            </article>
+        </MudContainer>
+        <Footer />
     </main>
 </div>
 
 @code{
+    [Inject]
+    ThemeService? ThemeService { get; set; }
 
+    [CascadingParameter(Name = "Setting")]
+    ThemeSettings? Settings { get; set; }
+
+    public string BackgroundColour = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        Action<ThemeSettings> OnThemeSettingsUpdate = (settings) =>
+        {
+            Settings = settings;
+            BackgroundColour = Settings.IsDarkMode ? Settings.DarkTheme.Primary : Settings.LightTheme.Primary;
+            this.StateHasChanged();
+        };
+        ThemeService?.AddThemeSubscription(OnThemeSettingsUpdate);
+
+    }
+
+    protected override void OnParametersSet()
+    {
+        Settings = ThemeService?.SettingsObservable.Settings;
+        if(Settings is not null)
+            BackgroundColour = Settings.IsDarkMode ? Settings.DarkTheme.Primary : Settings.LightTheme.Primary;
+        this.StateHasChanged();
+    }
 }

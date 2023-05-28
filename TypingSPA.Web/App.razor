@@ -1,10 +1,13 @@
-﻿<MudThemeProvider @ref="@MudThemeProviderRef" IsDarkMode="Settings.IsDarkMode" Theme="Theme" DefaultScrollbar="Settings.DefaultScrollBar" />
+﻿<MudThemeProvider @ref="@MudThemeProviderRef" IsDarkMode="Settings != null ? Settings.IsDarkMode : false" Theme="Theme" DefaultScrollbar="Settings != null ? Settings.DefaultScrollBar : false" />
 <MudDialogProvider />
 <MudSnackbarProvider />
 <Router AppAssembly="@typeof(App).Assembly">
+
     <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
-        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+        <CascadingValue Value="@Settings" Name="Settings">
+            <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+            <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+        </CascadingValue>
     </Found>
     <NotFound>
         <PageTitle>Not found</PageTitle>
@@ -23,8 +26,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        // prevent MudThemeProvider from erroring since Settings is used as bind property
-        Settings = new ThemeSettings();
         await ThemeService.LoadSettingsFromLocalStorage();
         Settings = ThemeService.SettingsObservable.Settings;
         SetColourTheme();
@@ -32,23 +33,12 @@
         {
             Settings = settings;
             SetColourTheme();
-            ThemeService.SaveLocalStorageThemeSettings();
+            ThemeService.SaveLocalStorageThemeSettings(); // dont need to wait for save
             this.StateHasChanged();
         };
 
         ThemeService.AddThemeSubscription(OnThemeSettingsUpdate);
     }
-
-
-    //protected override async Task OnAfterRenderAsync(bool firstRender)
-    //{
-    //    if (firstRender)
-    //    {
-    //        // load preferences not needed when OnIntializedAsync also loads theme settings
-    //        await ThemeService.LoadSettingsFromLocalStorage();
-    //        Settings = ThemeService.SettingsObservable.Settings;
-    //    }
-    //}
 
     public void SetColourTheme()
     {

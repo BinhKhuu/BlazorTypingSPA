@@ -27,7 +27,7 @@ namespace TypingSPA.Web.Services
                 var themeSettings = await LocalStorage.GetValueAsync<ThemeSettings>(LocalStorageSettingConstants.ThemeSettingName);
                 if (themeSettings == null)
                 {
-                    SaveLocalStorageDefaultThemeSettings(); //save default values
+                    await SaveLocalStorageDefaultThemeSettings(); //save default values
                 }
                 else
                 {
@@ -37,7 +37,7 @@ namespace TypingSPA.Web.Services
             }
             catch (Exception ex)
             {
-                SaveLocalStorageDefaultThemeSettings(); //save default values
+                await SaveLocalStorageDefaultThemeSettings(); //save default values
             }
 
         }
@@ -66,13 +66,13 @@ namespace TypingSPA.Web.Services
                 DefaultScrollBar = false,
                 LightTheme = new ThemePalette()
                 {
-                    Primary = Colors.Blue.Default,
+                    Primary = Colors.Yellow.Darken3,
                     Secondary = Colors.Green.Accent4,
                     AppbarBackground = Colors.Red.Default,
                 },
                 DarkTheme = new ThemePalette()
                 {
-                    Primary = Colors.Blue.Default,
+                    Primary = Colors.Grey.Darken4,
                     Secondary = Colors.Green.Accent4,
                     AppbarBackground = Colors.Red.Default,
                 }
