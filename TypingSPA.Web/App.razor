@@ -1,7 +1,13 @@
-﻿<Router AppAssembly="@typeof(App).Assembly">
+﻿<MudThemeProvider @ref="@MudThemeProviderRef" IsDarkMode="Settings != null ? Settings.IsDarkMode : false" Theme="Theme" DefaultScrollbar="Settings != null ? Settings.DefaultScrollBar : false" />
+<MudDialogProvider />
+<MudSnackbarProvider />
+<Router AppAssembly="@typeof(App).Assembly">
+
     <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
-        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+        <CascadingValue Value="@Settings" Name="Settings">
+            <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+            <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+        </CascadingValue>
     </Found>
     <NotFound>
         <PageTitle>Not found</PageTitle>
@@ -10,3 +16,46 @@
         </LayoutView>
     </NotFound>
 </Router>
+
+@code{
+    [Inject]
+    ThemeService ThemeService { get; set; }
+    MudThemeProvider MudThemeProviderRef { get; set; }
+    ThemeSettings Settings { get; set; }
+    MudTheme Theme { get; set; } = new MudTheme();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ThemeService.LoadSettingsFromLocalStorage();
+        Settings = ThemeService.SettingsObservable.Settings;
+        SetColourTheme();
+        Action<ThemeSettings> OnThemeSettingsUpdate = (settings) =>
+        {
+            Settings = settings;
+            SetColourTheme();
+            ThemeService.SaveLocalStorageThemeSettings(); // dont need to wait for save
+            this.StateHasChanged();
+        };
+
+        ThemeService.AddThemeSubscription(OnThemeSettingsUpdate);
+    }
+
+    public void SetColourTheme()
+    {
+        Theme = new MudTheme()
+            {
+                Palette = new PaletteLight()
+                {
+                    Primary = Settings.LightTheme.Primary,
+                    Secondary = Settings.LightTheme.Secondary,
+                    AppbarBackground = Settings.LightTheme.AppbarBackground,
+                },
+                PaletteDark = new PaletteDark()
+                {
+                    Primary = Settings.DarkTheme.Primary,
+                    Secondary = Settings.DarkTheme.Secondary,
+                    AppbarBackground = Settings.DarkTheme.AppbarBackground
+                }
+            };
+    }
+}
