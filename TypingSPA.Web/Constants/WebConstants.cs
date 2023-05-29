@@ -17,11 +17,18 @@ namespace TypingSPA.Web.Constants
             public static readonly string LandingPage = "LandingPage";
             public static readonly string GlobalFooter = "GlobalFooter";
             public static readonly string MainComponent = "MainComponent";
+            public static readonly string TypingComponent = "TypingComponent";
         }
 
         public static class LocalStorageSettingConstants
         {
             public static readonly string ThemeSettingName = "TypingSPAThemeSettings";
+        }
+
+        public static class TypingComponentIds
+        {
+            public static readonly string HiddenInput = "HiddenInput";
+            public static readonly string QuoteDisplay = "QuoteDisplay";
         }
     }
 }
