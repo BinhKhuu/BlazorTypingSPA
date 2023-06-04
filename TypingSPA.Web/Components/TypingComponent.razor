@@ -4,5 +4,5 @@
             @TestText
         </MudPaper>
     </MudContainer>
-    <input @onkeydown="OnInputUpdate" @ref="HiddenInputRef" id="@WebConstants.TypingComponentIds.HiddenInput" style="width:0; opacity:0; overflow:hidden" />
+    <input @onfocusout="OnFoucsOut" @onkeydown="OnInputUpdate" @ref="HiddenInputRef" id="@WebConstants.TypingComponentIds.HiddenInput" style="width:0; opacity:0; overflow:hidden" />
 </div>

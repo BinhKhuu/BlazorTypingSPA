@@ -53,7 +53,7 @@ namespace TypingSPA.Tests.Web.Components
             var typingComponent = comp.Find($"#{WebConstants.ComponentIDs.TypingComponent}");
             await typingComponent.ClickAsync(new MouseEventArgs());
             // not IsFocus Attribute is not working
-            Assert.True(comp.Instance.HiddenIsFocus);
+            Assert.True(comp.Instance.HiddenInputIsFocused);
         }
 
         // no on mouseenter has to be a custom even triggered https://bunit.dev/docs/interaction/trigger-event-handlers.html?tabs=csharp
@@ -84,7 +84,7 @@ namespace TypingSPA.Tests.Web.Components
         }
 
         [Fact]
-        public void TypingShouldUpdateTextComponent()
+        public void TypingAlphaNumbericAndPunctuationShouldUpdateTextComponent()
         {
             var comp = ctx.RenderComponent<TypingSPA.Web.Components.TypingComponent>();
             var hiddenInput = comp.Find($"#{WebConstants.TypingComponentIds.HiddenInput}");
@@ -94,9 +94,23 @@ namespace TypingSPA.Tests.Web.Components
             //});
             hiddenInput.KeyDown(new KeyboardEventArgs
             {
-                Key = "A"
+                Key = "a",
+                Code = "KeyA"
             });
-            Assert.True(comp.Instance.TestText == "A");
+            Assert.True(comp.Instance.TestText == "a");
         }
+        [Fact]
+        public void TypingSpecialKeysShouldIgnore()
+        {
+            var comp = ctx.RenderComponent<TypingSPA.Web.Components.TypingComponent>();
+            var hiddenInput = comp.Find($"#{WebConstants.TypingComponentIds.HiddenInput}");
+            hiddenInput.KeyDown(new KeyboardEventArgs
+            {
+                Key = "shift",
+                Code = "leftshift"
+            });
+            Assert.True(string.IsNullOrEmpty(comp.Instance.TestText));
+        }
+
     }
 }
