@@ -1,0 +1,19 @@
+﻿body {
+}
+
+#caret {
+    border-left: 3px solid black;
+    height: 1.2em;
+    position: absolute;
+    display: inline;
+}
+
+.flash {
+    animation: blinker 1.3s linear infinite;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}

@@ -1,0 +1,10 @@
+﻿<div id="@WebConstants.QuoteComponentIds.Container">
+    <MudText Typo="Typo.h4">
+    <div id="caret" class="flash"></div>
+    @foreach (var letter in QuoteText)
+    {
+        <span class="@FontColourClass"> @letter</span>
+    }
+    </MudText>
+</div>
+

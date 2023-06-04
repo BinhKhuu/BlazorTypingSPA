@@ -25,10 +25,16 @@ namespace TypingSPA.Web.Constants
             public static readonly string ThemeSettingName = "TypingSPAThemeSettings";
         }
 
+        public static class QuoteComponentIds
+        {
+            public static readonly string Container = "QuoteContainer";
+        }
+
         public static class TypingComponentIds
         {
             public static readonly string HiddenInput = "HiddenInput";
             public static readonly string QuoteDisplay = "QuoteDisplay";
         }
+
     }
 }
