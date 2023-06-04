@@ -97,7 +97,7 @@ namespace TypingSPA.Tests.Web.Components
                 Key = "a",
                 Code = "KeyA"
             });
-            Assert.True(comp.Instance.UserTypingText == "a");
+            Assert.True(comp.Instance.CurrentInputText == "a");
         }
         [Fact]
         public void TypingSpecialKeysShouldIgnore()
@@ -109,7 +109,7 @@ namespace TypingSPA.Tests.Web.Components
                 Key = "shift",
                 Code = "leftshift"
             });
-            Assert.True(string.IsNullOrEmpty(comp.Instance.UserTypingText));
+            Assert.True(string.IsNullOrEmpty(comp.Instance.CurrentInputText));
         }
 
     }

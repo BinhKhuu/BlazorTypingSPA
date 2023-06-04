@@ -36,7 +36,8 @@ namespace TypingSPA.Tests.Web.Components
         {
             var comp = ctx.RenderComponent<QuoteComponent>(parameters =>
                 parameters
-                .Add(p => p.QuoteText, quoteText)
+                .Add(p => p.OriginalQuote, quoteText)
+                .Add(p => p.CurrentInputText, "")
               );
 
             return comp;
@@ -56,6 +57,33 @@ namespace TypingSPA.Tests.Web.Components
             var comp = RenderQuoteComponent();
             var quoteContainer = comp.Find($"#{WebConstants.QuoteComponentIds.Container}");
             Assert.Equal(quoteContainer.TextContent, quoteText);
+        }
+
+        [Fact]
+        public void TypingShouldUpdateCursorPosition()
+        {
+
+        }
+
+        [Fact]
+        public void CursorShouldBeAtEnd()
+        {
+
+        }
+
+        [Fact]
+        public void CaretShouldBeAtStart()
+        {
+            var comp = ctx.RenderComponent<QuoteComponent>(parameters =>
+                parameters
+                .Add(p => p.OriginalQuote, quoteText)
+                .Add(p => p.CurrentInputText, "")
+              );
+
+            var quoteContainer = comp.Find($"#{WebConstants.QuoteComponentIds.Container}");
+            var caret = comp.Find($"#{WebConstants.QuoteComponentIds.Caret}");
+            Assert.NotNull(caret);
+            Assert.Equal(comp.Instance.Quote, "|" + comp.Instance.OriginalQuote);
         }
     }
 }

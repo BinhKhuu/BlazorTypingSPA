@@ -28,6 +28,7 @@ namespace TypingSPA.Web.Constants
         public static class QuoteComponentIds
         {
             public static readonly string Container = "QuoteContainer";
+            public static readonly string Caret = "Caret";
         }
 
         public static class TypingComponentIds

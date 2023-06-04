@@ -1,7 +1,7 @@
 ﻿<div id="@WebConstants.ComponentIDs.TypingComponent" @onmouseenter="FocusHiddenInput" @onclick="FocusHiddenInput">
     <MudContainer MaxWidth="MaxWidth.Large" >
         <MudPaper id="@WebConstants.TypingComponentIds.QuoteDisplay" Elevation="1" Height="600px" Width="100%" Square="true" Class="mud-theme-primary">
-            <QuoteComponent QuoteText="@QuoteText" />
+            <QuoteComponent OriginalQuote="@QuoteText" CurrentInputText="@CurrentInputText" />
         </MudPaper>
     </MudContainer>
     <input @onfocusout="OnFoucsOut" @onkeydown="OnInputUpdate" @ref="HiddenInputRef" id="@WebConstants.TypingComponentIds.HiddenInput" style="width:0; opacity:0; overflow:hidden" />
