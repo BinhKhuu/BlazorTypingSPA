@@ -8,7 +8,8 @@ namespace TypingSPA.Web.Components
     {
 
         public ElementReference HiddenInputRef {get; set;}
-        public string TestText { get; set;}
+        public string UserTypingText { get; set;}
+        public string QuoteText { get; set; } = "The Quick Brown fox jumped over the lazy cow";
         public bool HiddenInputIsFocused { get; set;}
         public virtual async Task FocusHiddenInput()
         {
@@ -20,20 +21,20 @@ namespace TypingSPA.Web.Components
         {
             if (e.Code.StartsWith("Key") || e.Code.StartsWith("Digit"))
             {
-                TestText = String.Concat(TestText, e.Key);
+                UserTypingText = String.Concat(UserTypingText, e.Key);
                 return;
             }
 
             if (e.Code == "Space")
             {
-                TestText = String.Concat(TestText, " ");
+                UserTypingText = String.Concat(UserTypingText, " ");
                 return;
             }
 
             if(e.Code == "Backspace")
             {
-                if(TestText.Length > 0) 
-                    TestText = TestText.Substring(0,TestText.Length - 1);
+                if(UserTypingText.Length > 0) 
+                    UserTypingText = UserTypingText.Substring(0,UserTypingText.Length - 1);
                 return;
             }
 
@@ -41,7 +42,7 @@ namespace TypingSPA.Web.Components
 
             if (punctuationMatcher.Match(e.Key).Success)
             {
-                TestText = String.Concat(TestText, e.Key);
+                UserTypingText = String.Concat(UserTypingText, e.Key);
                 return;
             }
 
