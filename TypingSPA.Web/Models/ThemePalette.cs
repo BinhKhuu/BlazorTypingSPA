@@ -4,6 +4,7 @@
     {
         public string Primary { get; set; }
         public string Secondary { get; set; }
+        public string Tertiary { get; set; }
         public string AppbarBackground { get; set; }
     }
 }

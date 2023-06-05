@@ -1,0 +1,20 @@
+﻿<div id="@WebConstants.QuoteComponentIds.Container">
+    <MudText Typo="Typo.h4">
+    
+    @foreach (var letter in Quote.Select((value, i) => new {i, value}))
+    {
+        @if (letter.value.Equals(WebConstants.QuoteComponentConstants.CaretDelimiter))
+        {
+            <div id="@WebConstants.QuoteComponentIds.Caret" class="flash"></div>
+        }
+        else
+        {
+            int index = letter.i >= @CompletedText.Length ? -1 : letter.i;
+            var colourClass = index == -1 ? WebConstants.QuoteComponentConstants.NoInputClass : @CompletedText[index].Equals('0') ? WebConstants.QuoteComponentConstants.ErrorClass : WebConstants.QuoteComponentConstants.SuccessClass;
+            <span class="@colourClass">@letter.value</span>
+        }
+            
+    }
+    </MudText>
+</div>
+
