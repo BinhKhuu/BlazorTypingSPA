@@ -3,7 +3,7 @@
     
     @foreach (var letter in Quote)
     {
-        @if(letter.Equals('|'))
+        @if (letter.Equals(WebConstants.QuoteComponentConstants.CaretDelimiter))
         {
             <div id="@WebConstants.QuoteComponentIds.Caret" class="flash"></div>
         }

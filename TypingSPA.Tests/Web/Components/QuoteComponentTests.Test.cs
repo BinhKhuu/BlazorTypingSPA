@@ -62,11 +62,15 @@ namespace TypingSPA.Tests.Web.Components
         [Fact]
         public void CursorShouldUpdatePosition()
         {
-            var comp = ctx.RenderComponent<QuoteComponent>(parameters =>
+            var comp = RenderQuoteComponent();
+
+            comp.SetParametersAndRender(parameters =>
                 parameters
                 .Add(p => p.OriginalQuote, quoteText)
                 .Add(p => p.CurrentInputText, "")
             );
+
+            Assert.Equal(comp.Instance.Quote, $"{WebConstants.QuoteComponentConstants.CaretDelimiter}{comp.Instance.OriginalQuote}");
 
             comp.SetParametersAndRender(parameters =>
                 parameters.Add(p => p.CurrentInputText, "T"));
@@ -74,13 +78,16 @@ namespace TypingSPA.Tests.Web.Components
             var quoteContainer = comp.Find($"#{WebConstants.QuoteComponentIds.Container}");
             var caret = comp.Find($"#{WebConstants.QuoteComponentIds.Caret}");
             Assert.NotNull(caret);
-            Assert.Equal(comp.Instance.Quote, comp.Instance.OriginalQuote[0] + "|" + comp.Instance.OriginalQuote.Substring(1));
+            Assert.Equal(comp.Instance.Quote, 
+                $"{comp.Instance.OriginalQuote[0]}{WebConstants.QuoteComponentConstants.CaretDelimiter}{comp.Instance.OriginalQuote.Substring(1)}");
         }
 
         [Fact]
         public void CursorShouldBeAtEnd()
         {
-            var comp = ctx.RenderComponent<QuoteComponent>(parameters =>
+            var comp = RenderQuoteComponent();
+
+            comp.SetParametersAndRender(parameters =>
                 parameters
                 .Add(p => p.OriginalQuote, quoteText)
                 .Add(p => p.CurrentInputText, quoteText)
@@ -89,13 +96,15 @@ namespace TypingSPA.Tests.Web.Components
             var quoteContainer = comp.Find($"#{WebConstants.QuoteComponentIds.Container}");
             var caret = comp.Find($"#{WebConstants.QuoteComponentIds.Caret}");
             Assert.NotNull(caret);
-            Assert.Equal(comp.Instance.Quote, comp.Instance.OriginalQuote + "|");
+            Assert.Equal(comp.Instance.Quote, $"{comp.Instance.OriginalQuote}{WebConstants.QuoteComponentConstants.CaretDelimiter}");
         }
 
         [Fact]
         public void CaretShouldBeAtStart()
         {
-            var comp = ctx.RenderComponent<QuoteComponent>(parameters =>
+            var comp = RenderQuoteComponent();
+
+            comp.SetParametersAndRender<QuoteComponent>(parameters =>
                 parameters
                 .Add(p => p.OriginalQuote, quoteText)
                 .Add(p => p.CurrentInputText, "")
@@ -104,7 +113,7 @@ namespace TypingSPA.Tests.Web.Components
             var quoteContainer = comp.Find($"#{WebConstants.QuoteComponentIds.Container}");
             var caret = comp.Find($"#{WebConstants.QuoteComponentIds.Caret}");
             Assert.NotNull(caret);
-            Assert.Equal(comp.Instance.Quote, "|" + comp.Instance.OriginalQuote);
+            Assert.Equal(comp.Instance.Quote, $"{WebConstants.QuoteComponentConstants.CaretDelimiter}{comp.Instance.OriginalQuote}");
         }
     }
 }

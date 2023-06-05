@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using TypingSPA.Web.Constants;
 
 namespace TypingSPA.Web.Components
 {
@@ -42,10 +43,10 @@ namespace TypingSPA.Web.Components
             string completedSection = string.Empty;
 
             if (cLen == 0)
-                return "|" + OriginalQuote;
+                return WebConstants.QuoteComponentConstants.CaretDelimiter + OriginalQuote;
 
             if (cLen >= OriginalQuote.Length)
-                return OriginalQuote + "|";
+                return OriginalQuote + WebConstants.QuoteComponentConstants.CaretDelimiter;
 
             if (cLen > 0)
             {
@@ -57,7 +58,7 @@ namespace TypingSPA.Web.Components
                 inCompletedSection = OriginalQuote;
             }
 
-            var newQuote = completedSection + "|" + inCompletedSection;
+            var newQuote = completedSection + WebConstants.QuoteComponentConstants.CaretDelimiter + inCompletedSection;
             return newQuote;
         }
 

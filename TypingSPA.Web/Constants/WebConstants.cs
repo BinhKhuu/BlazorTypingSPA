@@ -31,6 +31,11 @@ namespace TypingSPA.Web.Constants
             public static readonly string Caret = "Caret";
         }
 
+        public static class QuoteComponentConstants
+        {
+            public static readonly char CaretDelimiter = '|';
+        }
+
         public static class TypingComponentIds
         {
             public static readonly string HiddenInput = "HiddenInput";
