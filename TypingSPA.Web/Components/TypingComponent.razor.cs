@@ -1,16 +1,25 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using System.Text.RegularExpressions;
+using TypingSPA.Web.Services;
 
 namespace TypingSPA.Web.Components
 {
     public partial class TypingComponent : ComponentBase
     {
-
+        [Inject]
+        public QuoteHttpService? QuoteGenerator { get; set; }
         public ElementReference HiddenInputRef {get; set;}
         public string CurrentInputText { get; set; } = "";
         public string QuoteText { get; set; } = "test";
         public bool HiddenInputIsFocused { get; set;}
+
+        protected override async Task OnInitializedAsync()
+        {
+            var quote = await QuoteGenerator.GetRandomQuote();
+            QuoteText = quote.Content;
+        }
+
         public virtual async Task FocusHiddenInput()
         {
             await HiddenInputRef.FocusAsync(true);
