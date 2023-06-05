@@ -9,15 +9,15 @@ namespace TypingSPA.Web.Services
         private readonly HttpClient _HttpClient;
         private readonly JsonSerializerOptions _options;
 
-        public QuoteHttpService(IHttpClientFactory httpClientFactory) {
-            _HttpClient = httpClientFactory.CreateClient();
+        public QuoteHttpService(HttpClient http) {
+            _HttpClient = http;
             _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
         }
 
         public async Task<QuoteModel> GetRandomQuote()
         {
-            var response = await _HttpClient.GetAsync("http://localhost:7267/api/api/quote/random");
+            var response = await _HttpClient.GetAsync("quote/random");
             var content = await response.Content.ReadAsStringAsync();
             if (!response.IsSuccessStatusCode)
             {

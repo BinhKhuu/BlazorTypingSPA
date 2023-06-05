@@ -23,7 +23,7 @@ namespace TypingSPA.Api.Controllers
 
         [FunctionName("RandomQuote")]
         public async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "api/quote/random")] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "quote/random")] HttpRequest req,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
