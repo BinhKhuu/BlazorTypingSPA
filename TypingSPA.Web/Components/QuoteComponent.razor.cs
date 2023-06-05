@@ -27,18 +27,15 @@ namespace TypingSPA.Web.Components
         protected override void OnParametersSet()
         {
             base.OnParametersSet();
-
+            Quote = UpdateCursor();
+            ValidateInput();
             // check if current input is correct
 
-            // move cursour up
-            Quote = UpdateCursor();
         }
 
-        // TODO: Write test for this fuction
         private string UpdateCursor()
         {
-            CompletedText = CurrentInputText;
-            var cLen = CompletedText.Length == 0 ? 0 : CompletedText.Length;
+            var cLen = CurrentInputText.Length == 0 ? 0 : CurrentInputText.Length;
             string inCompletedSection;
             string completedSection = string.Empty;
 
@@ -62,5 +59,40 @@ namespace TypingSPA.Web.Components
             return newQuote;
         }
 
+        private void ValidateInput()
+        {
+            int currentPosition = CurrentInputText.Length;
+            if(currentPosition == 0)
+            {
+                CompletedText = string.Empty;
+                return;
+            }
+
+            if(currentPosition > OriginalQuote.Length)
+            {
+                return;
+            }
+
+            char? currentInput = CurrentInputText[currentPosition - 1];
+            char? currentProgress = OriginalQuote[currentPosition - 1];
+            
+
+            if(currentPosition < CompletedText.Length)
+            {
+                CompletedText = CompletedText.Substring(0,currentPosition);
+                return;
+            }
+
+            if(currentInput == currentProgress)
+            {
+                // success
+                CompletedText += "1";
+            }
+            else
+            {
+                // error
+                CompletedText += "0";
+            }
+        }
     }
 }

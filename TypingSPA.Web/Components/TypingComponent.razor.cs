@@ -9,7 +9,7 @@ namespace TypingSPA.Web.Components
 
         public ElementReference HiddenInputRef {get; set;}
         public string CurrentInputText { get; set; } = "";
-        public string QuoteText { get; set; } = "The Quick Brown fox jumped over the lazy cow";
+        public string QuoteText { get; set; } = "test";
         public bool HiddenInputIsFocused { get; set;}
         public virtual async Task FocusHiddenInput()
         {
