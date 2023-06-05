@@ -60,15 +60,36 @@ namespace TypingSPA.Tests.Web.Components
         }
 
         [Fact]
-        public void TypingShouldUpdateCursorPosition()
+        public void CursorShouldUpdatePosition()
         {
+            var comp = ctx.RenderComponent<QuoteComponent>(parameters =>
+                parameters
+                .Add(p => p.OriginalQuote, quoteText)
+                .Add(p => p.CurrentInputText, "")
+            );
 
+            comp.SetParametersAndRender(parameters =>
+                parameters.Add(p => p.CurrentInputText, "T"));
+
+            var quoteContainer = comp.Find($"#{WebConstants.QuoteComponentIds.Container}");
+            var caret = comp.Find($"#{WebConstants.QuoteComponentIds.Caret}");
+            Assert.NotNull(caret);
+            Assert.Equal(comp.Instance.Quote, comp.Instance.OriginalQuote[0] + "|" + comp.Instance.OriginalQuote.Substring(1));
         }
 
         [Fact]
         public void CursorShouldBeAtEnd()
         {
+            var comp = ctx.RenderComponent<QuoteComponent>(parameters =>
+                parameters
+                .Add(p => p.OriginalQuote, quoteText)
+                .Add(p => p.CurrentInputText, quoteText)
+            );
 
+            var quoteContainer = comp.Find($"#{WebConstants.QuoteComponentIds.Container}");
+            var caret = comp.Find($"#{WebConstants.QuoteComponentIds.Caret}");
+            Assert.NotNull(caret);
+            Assert.Equal(comp.Instance.Quote, comp.Instance.OriginalQuote + "|");
         }
 
         [Fact]
