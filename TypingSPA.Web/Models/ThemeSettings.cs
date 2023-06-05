@@ -16,12 +16,14 @@ namespace TypingSPA.Web.Models
         {
             Primary = Colors.Blue.Default,
             Secondary = Colors.Green.Accent4,
+            Tertiary = Colors.Red.Default,
             AppbarBackground = Colors.Red.Default,
         };
         public ThemePalette? DarkTheme { get; set; } = new ThemePalette()
         {
             Primary = Colors.Blue.Default,
             Secondary = Colors.Green.Accent4,
+            Tertiary = Colors.Red.Default,
             AppbarBackground = Colors.Red.Default,
         };
 

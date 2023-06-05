@@ -68,12 +68,14 @@ namespace TypingSPA.Web.Services
                 {
                     Primary = Colors.Yellow.Darken3,
                     Secondary = Colors.Green.Accent4,
+                    Tertiary = Colors.Red.Accent4,
                     AppbarBackground = Colors.Red.Default,
                 },
                 DarkTheme = new ThemePalette()
                 {
                     Primary = Colors.Grey.Darken4,
                     Secondary = Colors.Green.Accent4,
+                    Tertiary = Colors.Red.Accent4,
                     AppbarBackground = Colors.Red.Default,
                 }
             };

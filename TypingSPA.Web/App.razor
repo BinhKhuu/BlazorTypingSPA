@@ -42,20 +42,33 @@
 
     public void SetColourTheme()
     {
-        Theme = new MudTheme()
-            {
-                Palette = new PaletteLight()
+        try // set default values if theme fails to load
+        {
+            Theme = new MudTheme()
                 {
-                    Primary = Settings.LightTheme.Primary,
-                    Secondary = Settings.LightTheme.Secondary,
-                    AppbarBackground = Settings.LightTheme.AppbarBackground,
-                },
-                PaletteDark = new PaletteDark()
-                {
-                    Primary = Settings.DarkTheme.Primary,
-                    Secondary = Settings.DarkTheme.Secondary,
-                    AppbarBackground = Settings.DarkTheme.AppbarBackground
-                }
-            };
+                    Palette = new PaletteLight()
+                    {
+                        Primary = Settings.LightTheme.Primary,
+                        Secondary = Settings.LightTheme.Secondary,
+                        Tertiary = Settings.LightTheme.Tertiary,
+                        AppbarBackground = Settings.LightTheme.AppbarBackground,
+                    },
+                    PaletteDark = new PaletteDark()
+                    {
+                        Primary = Settings.DarkTheme.Primary,
+                        Secondary = Settings.DarkTheme.Secondary,
+                        Tertiary = Settings.LightTheme.Tertiary,
+                        AppbarBackground = Settings.DarkTheme.AppbarBackground
+                    }
+                };
+
+        }
+        catch (Exception e)
+        {
+            ThemeService.SaveLocalStorageDefaultThemeSettings().Wait();
+            ThemeService.LoadSettingsFromLocalStorage().Wait();
+        }
+
+        
     }
 }
