@@ -13,10 +13,6 @@ namespace TypingSPA.Web.Components
         private string CompletedText { get; set; } = string.Empty;
         public string Quote { get; set; } = string.Empty;
 
-        public string FontColourClass { get; set; } = "mud-palette-white";
-        private const string errorColour = "mud-tertiary-text";
-        private const string successColour = "mud-secondary-text";
-
         protected override void OnInitialized()
         {
             base.OnInitialized();
@@ -62,20 +58,15 @@ namespace TypingSPA.Web.Components
         private void ValidateInput()
         {
             int currentPosition = CurrentInputText.Length;
-            if(currentPosition == 0)
+            if (currentPosition > OriginalQuote.Length) return;
+            if (currentPosition == 0)
             {
                 CompletedText = string.Empty;
                 return;
             }
 
-            if(currentPosition > OriginalQuote.Length)
-            {
-                return;
-            }
-
             char? currentInput = CurrentInputText[currentPosition - 1];
             char? currentProgress = OriginalQuote[currentPosition - 1];
-            
 
             if(currentPosition < CompletedText.Length)
             {

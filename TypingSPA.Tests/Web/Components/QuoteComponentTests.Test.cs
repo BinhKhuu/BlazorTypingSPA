@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using MudBlazor.Services;
+using AngleSharp.Dom;
 
 namespace TypingSPA.Tests.Web.Components
 {
@@ -75,7 +76,6 @@ namespace TypingSPA.Tests.Web.Components
             comp.SetParametersAndRender(parameters =>
                 parameters.Add(p => p.CurrentInputText, "T"));
 
-            var quoteContainer = comp.Find($"#{WebConstants.QuoteComponentIds.Container}");
             var caret = comp.Find($"#{WebConstants.QuoteComponentIds.Caret}");
             Assert.NotNull(caret);
             Assert.Equal(comp.Instance.Quote, 
@@ -92,8 +92,6 @@ namespace TypingSPA.Tests.Web.Components
                 .Add(p => p.OriginalQuote, quoteText)
                 .Add(p => p.CurrentInputText, quoteText)
             );
-
-            var quoteContainer = comp.Find($"#{WebConstants.QuoteComponentIds.Container}");
             var caret = comp.Find($"#{WebConstants.QuoteComponentIds.Caret}");
             Assert.NotNull(caret);
             Assert.Equal(comp.Instance.Quote, $"{comp.Instance.OriginalQuote}{WebConstants.QuoteComponentConstants.CaretDelimiter}");
@@ -109,11 +107,35 @@ namespace TypingSPA.Tests.Web.Components
                 .Add(p => p.OriginalQuote, quoteText)
                 .Add(p => p.CurrentInputText, "")
               );
-
-            var quoteContainer = comp.Find($"#{WebConstants.QuoteComponentIds.Container}");
             var caret = comp.Find($"#{WebConstants.QuoteComponentIds.Caret}");
             Assert.NotNull(caret);
             Assert.Equal(comp.Instance.Quote, $"{WebConstants.QuoteComponentConstants.CaretDelimiter}{comp.Instance.OriginalQuote}");
+        }
+
+        [Fact]
+        public void TextColourError()
+        {
+            var comp = RenderQuoteComponent();
+            comp.SetParametersAndRender<QuoteComponent>(parameters =>
+                parameters
+                .Add(p => p.OriginalQuote, quoteText)
+                .Add(p => p.CurrentInputText, "T")
+              );
+            var quoteContainer = comp.Find($"#{WebConstants.QuoteComponentIds.Container} span.{WebConstants.QuoteComponentConstants.ErrorClass}");
+            Assert.NotNull(quoteContainer);
+        }
+
+        [Fact]
+        public void TextColourSuccess()
+        {
+            var comp = RenderQuoteComponent();
+            comp.SetParametersAndRender<QuoteComponent>(parameters =>
+                parameters
+                .Add(p => p.OriginalQuote, quoteText)
+                .Add(p => p.CurrentInputText, "t")
+              );
+            var quoteContainer = comp.Find($"#{WebConstants.QuoteComponentIds.Container} span.{WebConstants.QuoteComponentConstants.SuccessClass}");
+            Assert.NotNull(quoteContainer);
         }
     }
 }

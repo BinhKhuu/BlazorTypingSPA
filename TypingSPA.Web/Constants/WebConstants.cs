@@ -34,6 +34,9 @@ namespace TypingSPA.Web.Constants
         public static class QuoteComponentConstants
         {
             public static readonly char CaretDelimiter = '|';
+            public static readonly string ErrorClass = "mud-tertiary-text";
+            public static readonly string SuccessClass = "mud-secondary-text";
+            public static readonly string NoInputClass = "mud-palette-white";
         }
 
         public static class TypingComponentIds

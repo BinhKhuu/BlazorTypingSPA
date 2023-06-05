@@ -10,8 +10,7 @@
             else
             {
                 int index = letter.i >= @CompletedText.Length ? -1 : letter.i;
-                var colourClass = index == -1 ? @FontColourClass : @CompletedText[index].Equals('0') ? @errorColour : @successColour;
-
+                var colourClass = index == -1 ? WebConstants.QuoteComponentConstants.NoInputClass : @CompletedText[index].Equals('0') ? WebConstants.QuoteComponentConstants.ErrorClass : WebConstants.QuoteComponentConstants.SuccessClass;
                 <span class="@colourClass">@letter.value</span>
         }
             
@@ -19,7 +18,7 @@
     <br />
     @foreach (var letter in CurrentInputText)
     {
-        <span class="@FontColourClass"> @letter</span>
+            <span class="@WebConstants.QuoteComponentConstants.NoInputClass"> @letter</span>
     }
     </MudText>
 </div>
